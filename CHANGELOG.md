@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-20
+
 ### Added
 
 - First version of the Ghostfolio integration, read only, with the security token of the user.
@@ -22,4 +24,5 @@ the notes of the version's GitHub Release.
 - A scene action "read the portfolio", and a connection test in the configuration.
 - Texts and documentation in English, French, German and Spanish.
 
-[Unreleased]: https://github.com/guim31/gladys-ghostfolio/commits/main
+[Unreleased]: https://github.com/guim31/gladys-ghostfolio/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/guim31/gladys-ghostfolio/releases/tag/v1.0.0
