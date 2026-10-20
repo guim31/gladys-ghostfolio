@@ -248,7 +248,7 @@ long, et sur un « Sie »/« Ihr… » de politesse en allemand. Le store exige 
   `v1/portfolio/details`, `v1/account`. Réponses enregistrées sur Ghostfolio 3.88.0 (`test/fixtures/ghostfolio`,
   graphiques allégés).
 - **Champs** : `performance.currentValueInBaseCurrency` = positions seules, `currentNetWorth` = positions +
-  liquidités des comptes. On publie les variantes `…WithCurrencyEffect` (celles de l'interface). Les
+  liquidités des comptes. On publie les variantes `…WithCurrencyEffect` (celles de l'interface) pour les variations ; « Investi » reste `totalInvestment`. Les
   pourcentages sont des **ratios** (0,239 = 23,9 %). En 3.x, `details.holdings` est un **tableau** dont la classe
   est sous `assetProfile.assetClass` (un objet indexé par symbole en 2.x, classe à plat) ; les liquidités y
   figurent en `LIQUIDITY`. `SymbolProfile` est devenu `assetProfile` dans les activités.

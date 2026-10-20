@@ -78,6 +78,9 @@ export function registerHandlers(gladys, options = {}) {
   // "Update" in the Discover tab: the SDK forgot the states of the device too.
   gladys.onDeviceUpdated(whenReady((device) => monitor.onDeviceCreated(device)));
 
+  // A device removed in Gladys leaves the widget at once.
+  gladys.onDeviceDeleted(whenReady(() => monitor.requestRefresh()));
+
   gladys.onConfigUpdated(whenReady((newConfig) => monitor.reconfigure(normalizeConfig(newConfig))));
 
   gladys.onAction(

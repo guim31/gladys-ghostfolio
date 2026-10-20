@@ -107,7 +107,7 @@ export function historyOf(body, today) {
     return values.length === 0 ? null : Math.max(...values);
   };
   return {
-    netWorth: highest((point) => amountOf(first(point, 'netWorth', 'value'))),
+    netWorth: highest((point) => amountOf(first(point, 'netWorth'))),
     percent: highest((point) =>
       percentOf(
         first(point, 'netPerformanceInPercentageWithCurrencyEffect', 'netPerformanceInPercentage'),
@@ -220,8 +220,9 @@ export class GhostfolioClient {
 
   /** GET a JSON endpoint, signing in first, and again once if the session expired. */
   async get(path) {
-    for (let attempt = 0; attempt < 2; attempt += 1) {
-      if (!this.jwt) {
+    for (;;) {
+      const fresh = !this.jwt;
+      if (fresh) {
         await this.authenticate();
       }
       const response = await this.send(path, {
@@ -229,6 +230,12 @@ export class GhostfolioClient {
       });
       if (response.status === 401 || response.status === 403) {
         this.jwt = null;
+        if (fresh) {
+          // The token was just accepted: a proxy, not the token, refuses this path.
+          throw new NotGhostfolioError(
+            `Ghostfolio refuses ${path.split('?')[0]} (HTTP ${response.status})`,
+          );
+        }
         continue;
       }
       if (response.status === 404) {
@@ -239,7 +246,6 @@ export class GhostfolioClient {
       }
       return this.parse(response);
     }
-    throw new UnauthorizedError('Ghostfolio refuses the session token');
   }
 
   /**

@@ -44,6 +44,8 @@ export function createApi() {
   let validJwt = JWT;
   const api = {
     down: false,
+    // A route a reverse proxy refuses with 403, whatever the session.
+    forbidden: null,
     requests: [],
 
     body(route) {
@@ -84,6 +86,9 @@ export function createApi() {
           return { status: 403, headers: {}, body: '{"statusCode":403,"message":"Forbidden"}' };
         }
         return { status: 201, headers: {}, body: JSON.stringify({ authToken: validJwt }) };
+      }
+      if (route === api.forbidden) {
+        return { status: 403, headers: {}, body: '{"statusCode":403,"message":"Forbidden"}' };
       }
       if (options.headers?.authorization !== `Bearer ${validJwt}`) {
         return { status: 401, headers: {}, body: '{"statusCode":401,"message":"Unauthorized"}' };

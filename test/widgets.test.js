@@ -6,7 +6,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { validateWidgetContent } from '@gladysassistant/integration-sdk';
-import { CONFIG, createAll, createWorld, cycle } from './helpers/world.js';
+import { CONFIG, createAll, createApi, createWorld, cycle } from './helpers/world.js';
 
 async function world(t, options = {}) {
   const w = await createWorld(options);
@@ -76,10 +76,25 @@ test('a loss is red, with its sign, in English', async (t) => {
 test('the widget before the portfolio is added, and before any answer', async (t) => {
   const w = await world(t);
   assert.equal((await widget(w, 'de')).components[0].text, 'Füge das Portfolio hinzu');
-  const down = await world(t, { config: { ...CONFIG, token: 'wrong' } });
-  assert.deepEqual((await widget(down, 'es')).components, [
-    { type: 'text', variant: 'heading', text: 'Ghostfolio no responde' },
+  const refused = await world(t, { config: { ...CONFIG, token: 'wrong' } });
+  assert.deepEqual((await widget(refused, 'es')).components, [
+    { type: 'text', variant: 'heading', text: 'Token de seguridad rechazado' },
   ]);
+  const empty = await world(t, { config: {} });
+  assert.equal((await widget(empty, 'fr')).components[0].text, "Configurez l'intégration");
+  const api = createApi();
+  api.down = 'network';
+  const down = await world(t, { api });
+  assert.equal((await widget(down, 'en')).components[0].text, 'Ghostfolio does not answer');
+});
+
+test('deleting a device refreshes the widget', async (t) => {
+  const w = await world(t);
+  const [device] = await createAll(w);
+  w.clock.advance(20000);
+  const refreshes = w.fake.widgetRefreshes.length;
+  await w.fake.deviceDeleted(device);
+  assert.equal(w.fake.widgetRefreshes.length, refreshes + 1);
 });
 
 test('read_portfolio tells the net worth and the changes', async (t) => {

@@ -74,7 +74,7 @@ añadidos.
 **Cuenta** (con el nombre de Ghostfolio): **Valor** (posiciones y efectivo de la cuenta), **Efectivo** y
 **Parte de la cartera** en porcentaje.
 
-Las cifras son las que Ghostfolio muestra con el efecto divisa. Renombrar una cuenta en Ghostfolio conserva su
+Las variaciones y la rentabilidad son las que Ghostfolio muestra con el efecto divisa; «Invertido» es la inversión total de Ghostfolio. Renombrar una cuenta en Ghostfolio conserva su
 dispositivo.
 
 ## Widget de panel

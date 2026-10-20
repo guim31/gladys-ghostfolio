@@ -12,7 +12,7 @@ verbunden.
 
 - Ein **Portfolio-Gerät**: Gesamtvermögen (inklusive Bargeld), Wert der Positionen, investierter Betrag und
   die Änderung von heute, seit 1. Januar und seit Beginn, als Betrag und in Prozent, mit ihrem Verlauf.
-- Ein **Gerät pro Konto** (Broker, Bank, Krypto-Wallet…): sein Wert, sein Bargeld und sein Anteil am
+- Ein **Gerät pro Konto** (Broker, Bank, Krypto-Wallet…): sein Wert, sein Guthaben und sein Anteil am
   Portfolio.
 - Ein **Dashboard-Widget**: die Zahlen des Portfolios, die Aufteilung nach Anlageklassen und die hinzugefügten
   Konten.
@@ -69,10 +69,10 @@ hinzugefügten Geräte werden verfolgt.
 | Änderung seit 1. Januar (und %)     | Nettoperformance seit 1. Januar                                   |
 | Gesamtperformance (und %)           | Nettoperformance seit der ersten Aktivität                        |
 
-**Konto** (Name wie in Ghostfolio): **Wert** (Positionen und Bargeld des Kontos), **Bargeld** und **Anteil am
+**Konto** (Name wie in Ghostfolio): **Wert** (Positionen und Guthaben des Kontos), **Guthaben** und **Anteil am
 Portfolio** in Prozent.
 
-Die Zahlen sind die, die Ghostfolio mit Währungseffekt anzeigt. Wenn du ein Konto in Ghostfolio umbenennst,
+Die Änderungen und die Performance sind die, die Ghostfolio mit Währungseffekt anzeigt; „Investiert“ ist die Gesamtinvestition von Ghostfolio. Wenn du ein Konto in Ghostfolio umbenennst,
 bleibt sein Gerät erhalten.
 
 ## Dashboard-Widget

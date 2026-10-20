@@ -32,6 +32,18 @@ export const TEXT = {
     de: 'Füge das Portfolio hinzu',
     es: 'Añada la cartera a Gladys',
   },
+  refused: {
+    en: 'Security token refused',
+    fr: 'Jeton de sécurité refusé',
+    de: 'Sicherheits-Token abgelehnt',
+    es: 'Token de seguridad rechazado',
+  },
+  notConfigured: {
+    en: 'Configure the integration',
+    fr: "Configurez l'intégration",
+    de: 'Konfiguriere die Integration',
+    es: 'Configure la integración',
+  },
   unreachable: {
     en: 'Ghostfolio does not answer',
     fr: 'Ghostfolio ne répond pas',
@@ -47,6 +59,16 @@ export const TEXT = {
 };
 
 const t = (text, language) => text[language] ?? text.en;
+
+const NOT_CONFIGURED = ['noUrl', 'noToken', 'invalidUrl'];
+
+/** The short text of a problem of the monitor (see STATUS for the long one). */
+export function problemText(problem, language) {
+  if (problem === 'unauthorized') {
+    return t(TEXT.refused, language);
+  }
+  return t(NOT_CONFIGURED.includes(problem) ? TEXT.notConfigured : TEXT.unreachable, language);
+}
 const clip = (text, max) => (text.length <= max ? text : `${text.slice(0, max - 1)}…`);
 
 /** Green for a gain, red for a loss, neutral otherwise. */
@@ -92,7 +114,7 @@ export const WIDGETS = {
     async get(monitor, { language = 'en' } = {}) {
       const lang = TEXT.today[language] ? language : 'en';
       if (!monitor.snapshot) {
-        const text = monitor.problem ? t(TEXT.unreachable, lang) : t(TEXT.waiting, lang);
+        const text = monitor.problem ? problemText(monitor.problem, lang) : t(TEXT.waiting, lang);
         return { ttl_seconds: 60, components: [{ type: 'text', variant: 'heading', text }] };
       }
       const { currency, allocation } = monitor.snapshot;
@@ -126,7 +148,7 @@ export const WIDGETS = {
           })),
         });
       }
-      const unreachable = monitor.problem ? ` · ${t(TEXT.unreachable, lang)}` : '';
+      const unreachable = monitor.problem ? ` · ${problemText(monitor.problem, lang)}` : '';
       components.push({
         type: 'text',
         variant: 'caption',

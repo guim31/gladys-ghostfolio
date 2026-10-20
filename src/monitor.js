@@ -74,6 +74,7 @@ export class Monitor {
     this.config = null;
     this.client = null;
     this.data = emptyData();
+    this.saved = null;
     this.snapshot = null;
     this.problem = null;
     this.lastSuccessAt = null;
@@ -262,7 +263,12 @@ export class Monitor {
     await this.publishDiscovered();
     await this.publishStates();
     await this.checkHighs(localDay(now));
-    this.store.save(this.data);
+    const saved = JSON.stringify(this.data);
+    if (saved !== this.saved) {
+      // Only when a high, its day or the user changed: no write at every cycle.
+      this.saved = saved;
+      this.store.save(this.data);
+    }
     await this.updateConnectionStatus();
     const signature = JSON.stringify(this.snapshot);
     if (signature !== this.signature) {

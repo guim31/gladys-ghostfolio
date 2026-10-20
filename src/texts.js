@@ -46,7 +46,7 @@ export const NAMES = {
     ytd_percent: 'Änderung seit 1. Januar (%)',
     total_change: 'Gesamtperformance',
     total_percent: 'Gesamtperformance (%)',
-    cash: 'Bargeld',
+    cash: 'Guthaben',
     share: 'Anteil am Portfolio',
   },
   es: {
@@ -133,7 +133,8 @@ export const STATUS = {
   en: {
     initFailed: 'The integration could not start: see its logs.',
     noUrl: 'Enter the address of Ghostfolio and your security token.',
-    invalidUrl: 'The address of Ghostfolio is not understood (no user or password in it).',
+    invalidUrl:
+      'The address of Ghostfolio is not understood: give it without user, password, ? or #.',
     noToken: 'Enter the security token of your Ghostfolio user.',
     unauthorized: 'Ghostfolio refuses the security token: check it, or create a new one.',
     unreachable: 'Ghostfolio does not answer: the last values are kept.',
@@ -146,7 +147,8 @@ export const STATUS = {
   fr: {
     initFailed: "L'intégration n'a pas pu démarrer : voir ses journaux.",
     noUrl: "Indiquez l'adresse de Ghostfolio et votre jeton de sécurité.",
-    invalidUrl: "L'adresse de Ghostfolio n'est pas comprise (sans utilisateur ni mot de passe).",
+    invalidUrl:
+      "L'adresse de Ghostfolio n'est pas comprise : donnez-la sans utilisateur, mot de passe, ? ni #.",
     noToken: 'Indiquez le jeton de sécurité de votre utilisateur Ghostfolio.',
     unauthorized: 'Ghostfolio refuse le jeton de sécurité : vérifiez-le, ou créez-en un nouveau.',
     unreachable: 'Ghostfolio ne répond pas : les dernières valeurs sont gardées.',
@@ -159,7 +161,8 @@ export const STATUS = {
   de: {
     initFailed: 'Die Integration konnte nicht starten: siehe ihre Protokolle.',
     noUrl: 'Gib die Adresse von Ghostfolio und dein Sicherheits-Token an.',
-    invalidUrl: 'Die Adresse von Ghostfolio wird nicht verstanden (ohne Benutzer und Passwort).',
+    invalidUrl:
+      'Die Adresse von Ghostfolio wird nicht verstanden: gib sie ohne Benutzer, Passwort, ? und # an.',
     noToken: 'Gib das Sicherheits-Token deines Ghostfolio-Benutzers an.',
     unauthorized: 'Ghostfolio lehnt das Sicherheits-Token ab: prüfe es oder erstelle ein neues.',
     unreachable: 'Ghostfolio antwortet nicht: die letzten Werte bleiben erhalten.',
@@ -172,7 +175,8 @@ export const STATUS = {
   es: {
     initFailed: 'La integración no pudo iniciarse: consulte sus registros.',
     noUrl: 'Indique la dirección de Ghostfolio y su token de seguridad.',
-    invalidUrl: 'La dirección de Ghostfolio no se entiende (sin usuario ni contraseña).',
+    invalidUrl:
+      'La dirección de Ghostfolio no se entiende: indíquela sin usuario, contraseña, ? ni #.',
     noToken: 'Indique el token de seguridad de su usuario de Ghostfolio.',
     unauthorized: 'Ghostfolio rechaza el token de seguridad: compruébelo o cree uno nuevo.',
     unreachable: 'Ghostfolio no responde: se conservan los últimos valores.',

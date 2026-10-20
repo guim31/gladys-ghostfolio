@@ -68,6 +68,15 @@ test('an expired session is renewed once, in the same cycle', async (t) => {
   assert.equal(w.fake.connectionStatus.connected, true);
 });
 
+test('a path refused with a fresh session is not blamed on the token', async (t) => {
+  const api = createApi();
+  api.forbidden = 'v1/account';
+  const w = await world(t, { api });
+  assert.equal(w.fake.connectionStatus.connected, false);
+  assert.match(w.fake.connectionStatus.message.en, /does not answer like the API/);
+  assert.equal(api.routes().filter((route) => route === 'v1/auth/anonymous').length, 2);
+});
+
 test('the portfolio and every account are discovered, polled by the container', async (t) => {
   const w = await world(t);
   const names = w.fake.discoveredDevices.map((device) => device.name);

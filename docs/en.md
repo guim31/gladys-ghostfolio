@@ -68,7 +68,7 @@ are followed.
 **Account** (named as in Ghostfolio): **Value** (holdings and cash of the account), **Cash**, and **Share of
 the portfolio** in percent.
 
-The figures are the ones Ghostfolio shows with the currency effect. Renaming an account in Ghostfolio keeps
+The changes and the performance are the ones Ghostfolio shows with the currency effect; "Invested" is Ghostfolio's total investment. Renaming an account in Ghostfolio keeps
 its device.
 
 ## Dashboard widget

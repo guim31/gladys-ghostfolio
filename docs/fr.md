@@ -76,7 +76,7 @@ ajoutés sont suivis.
 **Compte** (nommé comme dans Ghostfolio) : **Valeur** (positions et liquidités du compte), **Liquidités**, et
 **Part du portefeuille** en pourcentage.
 
-Les chiffres sont ceux que Ghostfolio affiche avec l'effet de change. Renommer un compte dans Ghostfolio garde
+Les variations et la performance sont celles que Ghostfolio affiche avec l'effet de change ; « Investi » est l'investissement total de Ghostfolio. Renommer un compte dans Ghostfolio garde
 son appareil.
 
 ## Widget de tableau de bord
