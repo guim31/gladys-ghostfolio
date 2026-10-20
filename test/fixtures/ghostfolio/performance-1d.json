@@ -1,0 +1,51 @@
+{
+  "chart": [
+    {
+      "dividendInPercentageWithCurrencyEffect": 0,
+      "netPerformanceInPercentage": 0,
+      "netPerformanceInPercentageWithCurrencyEffect": 0,
+      "date": "2026-10-19",
+      "dividendInBaseCurrency": 0,
+      "investmentValueWithCurrencyEffect": 0,
+      "netPerformance": 0,
+      "netPerformanceWithCurrencyEffect": 0,
+      "netWorth": 3613.4979882240295,
+      "totalCashInBaseCurrency": 0,
+      "totalInvestment": 3134.18,
+      "totalInvestmentValueWithCurrencyEffect": 3112.124001979828,
+      "value": 3613.18,
+      "valueWithCurrencyEffect": 3613.4979882240295
+    },
+    {
+      "dividendInPercentageWithCurrencyEffect": 0,
+      "netPerformanceInPercentage": 0.005474802222769702,
+      "netPerformanceInPercentageWithCurrencyEffect": 0.005391454187514177,
+      "date": "2026-10-20",
+      "dividendInBaseCurrency": 0,
+      "investmentValueWithCurrencyEffect": 445.15,
+      "netPerformance": 21,
+      "netPerformanceWithCurrencyEffect": 20.682011775970466,
+      "netWorth": 5629.83,
+      "totalCashInBaseCurrency": 1995.65,
+      "totalInvestment": 3579.33,
+      "totalInvestmentValueWithCurrencyEffect": 3557.274001979828,
+      "value": 4079.33,
+      "valueWithCurrencyEffect": 4079.33
+    }
+  ],
+  "errors": [],
+  "hasErrors": false,
+  "dateOfFirstActivity": "2024-03-14T00:00:00.000Z",
+  "performance": {
+    "dividendInBaseCurrency": 0,
+    "netPerformance": 21,
+    "netPerformanceWithCurrencyEffect": 20.682011775970466,
+    "totalInvestment": 3579.33,
+    "totalInvestmentValueWithCurrencyEffect": 3557.274001979828,
+    "currentNetWorth": 5629.83,
+    "currentValueInBaseCurrency": 4079.33,
+    "dividendPercentageWithCurrencyEffect": 0,
+    "netPerformancePercentage": 0.005474802222769702,
+    "netPerformancePercentageWithCurrencyEffect": 0.005391454187514177
+  }
+}

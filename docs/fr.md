@@ -1,67 +1,150 @@
-# Template de démonstration
+# Ghostfolio
 
-Ceci est la documentation utilisateur de l'intégration. Gladys ré-héberge ce
-fichier et affiche un lien **Documentation** permanent vers lui dans l'écran
-de configuration (dans la langue de l'utilisateur, avec l'anglais en repli) —
-c'est au moment de configurer que l'utilisateur en a le plus besoin. Gardez
-les courtes indications d'accueil dans les blocs `section` du `config_schema`
-du manifest ; mettez ici le pas-à-pas détaillé (captures d'écran, dépannage…).
+Retrouvez vos placements dans Gladys : le patrimoine, la performance du jour, de l'année et depuis le début,
+la répartition par classe d'actifs et la valeur de chaque compte, lus dans votre propre
+[Ghostfolio](https://ghostfol.io), le logiciel libre de suivi de patrimoine.
+
+L'intégration ne fait que lire : elle n'écrit jamais dans Ghostfolio, ne crée jamais d'opération. Elle parle
+directement à votre Ghostfolio sur votre réseau, avec le jeton de sécurité de votre utilisateur. Non affiliée à
+Ghostfolio.
 
 ## Ce que vous obtenez
 
-Six appareils de démonstration apparaissent après l'installation : une
-station météo (vraies données Open-Meteo), un interrupteur, une lampe
-variable, une prise connectée avec mesure de puissance, un détecteur de
-mouvement et une caméra.
+- Un **appareil portefeuille** : patrimoine total (liquidités comprises), valeur des positions, montant
+  investi, et la variation du jour, depuis le 1er janvier et depuis le début, en montant et en pourcentage,
+  avec leur historique.
+- Un **appareil par compte** (courtier, banque, portefeuille crypto…) : sa valeur, ses liquidités et sa part
+  du portefeuille.
+- Un **widget de tableau de bord** : les chiffres du portefeuille, la répartition par classe d'actifs et les
+  comptes ajoutés.
+- Un **déclencheur de scène** : le patrimoine, ou la performance totale, atteint un plus haut historique.
+- Une **action de scène** : lire le portefeuille, en une phrase à envoyer par message ou à faire lire à voix
+  haute.
+- Une variation du jour au-delà de ±N % passe par le déclencheur standard d'appareil de Gladys (voir les
+  exemples de scènes).
+
+Tous les montants sont dans la devise de base de votre utilisateur Ghostfolio : Ghostfolio convertit les
+autres devises.
+
+## Prérequis
+
+- Gladys Assistant 5.1 ou plus récent.
+- Un Ghostfolio récent (testé avec la 3.88.0), auto-hébergé et joignable depuis la machine de Gladys (même
+  réseau, VPN ou adresse publique).
+- Le jeton de sécurité de votre utilisateur Ghostfolio.
 
 ## Configuration
 
-1. Ouvrez l'onglet **Configuration** de l'intégration.
-2. Renseignez la **latitude** et la **longitude** que la station météo de
-   démonstration doit observer (Paris par défaut), et choisissez votre unité
-   de température. L'**intervalle de rafraîchissement** règle la fréquence
-   de lecture de la station météo et de la puissance de la prise : toutes
-   les 5 minutes par défaut, toutes les minutes au plus.
-3. Enregistrez : les appareils apparaissent dans l'onglet **Découverte**,
-   prêts à être ajoutés.
+### Trouver le jeton de sécurité
 
-Le réglage **Préférer la connexion locale** pilote la prise de
-démonstration : elle affiche en badge le canal réellement utilisé (local ou
-cloud), avec un point orange quand elle fonctionne en mode dégradé (local
-refusé, bascule cloud).
+Le jeton de sécurité est celui qui sert à vous connecter à Ghostfolio : Ghostfolio l'affiche une seule fois, à
+la création du compte. Si vous ne l'avez pas gardé, ouvrez **Mon Ghostfolio → Paramètres** et générez-en un
+nouveau (l'ancien cesse alors de fonctionner, y compris pour vous connecter). Un compte créé avec une
+connexion Google ou OpenID peut aussi en générer un à cet endroit.
 
-## Actions
+### Réglages
 
-- **Tester le fournisseur météo** — effectue une requête en direct vers
-  Open-Meteo et affiche la température et l'humidité actuelles sous le
-  bouton.
-- **Identifier un appareil** — choisissez un de vos appareils dans la liste
-  et il se signale (la lampe de démonstration « clignote » dans les logs).
+Dans Gladys, ouvrez **Intégrations → Ghostfolio → Configuration** :
 
-## Scènes
+- **Adresse de Ghostfolio** : l'adresse à laquelle vous ouvrez Ghostfolio, par exemple
+  `http://192.168.1.20:3333`. Sans `http://`, il est ajouté.
+- **Jeton de sécurité** : le jeton ci-dessus. Gladys le garde ; l'intégration ne l'écrit jamais dans ses
+  journaux.
+- **Accepter un certificat auto-signé** : seulement pour une adresse `https` dont vous avez fait le certificat
+  vous-même.
+- **Fréquence de mise à jour** : de 5 à 60 minutes, 15 par défaut. Ghostfolio met ses cours à jour lui-même.
+- **Langue des textes** : les noms des fonctionnalités (donnés à l'ajout d'un appareil) et les phrases envoyées
+  aux scènes. Français par défaut.
 
-L'intégration ajoute ses propres cartes à l'éditeur de scènes (Gladys 5.1
-ou plus récent), dans la catégorie **Intégrations** :
+Enregistrez, puis **Tester la connexion** : le message donne le patrimoine, le nombre de comptes et la devise
+de base. Ouvrez l'onglet **Découverte** et ajoutez le portefeuille et les comptes voulus : seuls les appareils
+ajoutés sont suivis.
 
-- **Mouvement détecté** (déclencheur) — lance la scène quand un détecteur
-  de démonstration voit bouger quelque chose. Choisissez éventuellement le
-  détecteur et ce qui a bougé (personne, animal) ; laissés vides, toute
-  détection correspond. Les actions suivantes peuvent lire ce qui a bougé
-  avec `{{triggerEvent.data.target}}`.
-- **Identifier un appareil** (action) — fait se signaler l'appareil choisi.
-  Elle indique si l'appareil a pu se signaler, pour que les actions
-  suivantes puissent en dépendre.
+## Appareils
 
-## Tableau de bord
+**Portefeuille** (nommé « Ghostfolio ») :
 
-Ajoutez le widget **État de la démo** à un tableau de bord : il affiche en
-direct la température de la station météo et la puissance de la prise du
-bureau, la connexion utilisée par la prise (en orange si dégradée) et la
-position observée. Son bouton **Identifier la lampe** fait se signaler la
-lampe de démonstration.
+| Fonctionnalité                            | Ce que c'est                                                |
+| ----------------------------------------- | ----------------------------------------------------------- |
+| Patrimoine total                          | Valeur des positions plus les liquidités des comptes        |
+| Valeur                                    | Valeur des positions                                        |
+| Investi                                   | Montant investi (achats moins ventes)                       |
+| Variation du jour / Variation du jour (%) | Performance nette du jour, frais et effet de change compris |
+| Variation depuis le 1er janvier (et %)    | Performance nette depuis le 1er janvier                     |
+| Performance totale (et %)                 | Performance nette depuis la première opération              |
+
+**Compte** (nommé comme dans Ghostfolio) : **Valeur** (positions et liquidités du compte), **Liquidités**, et
+**Part du portefeuille** en pourcentage.
+
+Les variations et la performance sont celles que Ghostfolio affiche avec l'effet de change ; « Investi » est l'investissement total de Ghostfolio. Renommer un compte dans Ghostfolio garde
+son appareil.
+
+## Widget de tableau de bord
+
+Ajoutez le widget **Aperçu Ghostfolio** à un tableau de bord : patrimoine, investi, variation du jour, de
+l'année et depuis le début (en vert pour un gain, en rouge pour une perte), puis la part de chaque classe
+d'actifs (actions, obligations, liquidités…), et les comptes ajoutés avec leur valeur et leur part. Le pied
+donne l'heure de la dernière lecture.
+
+## Déclencheurs de scène
+
+**Ghostfolio : plus haut historique**, avec la mesure à suivre :
+
+- **Patrimoine total** : le patrimoine dépasse son plus haut. Un versement compte aussi.
+- **Performance totale (%)** : la performance totale dépasse son plus haut ; les versements ne la font pas
+  bouger.
+
+Le plus haut vient du graphique de Ghostfolio à la première lecture du portefeuille, puis suit chaque nouveau
+record. L'événement part au plus une fois par jour et par mesure, quelle que soit la durée de la hausse.
+Variables : le nouveau plus haut, le précédent, l'unité (code de devise ou `%`) et une phrase toute faite.
+
+## Actions de scène
+
+**Ghostfolio : lire le portefeuille** répond par une phrase, par exemple « Portefeuille : 5 629,83 €.
+Aujourd'hui +20,68 € (+0,54 %), depuis le 1er janvier +6,15 %, depuis le début +23,90 %. » Sorties : la phrase,
+le patrimoine, la variation du jour (montant et pourcentage), la variation de l'année et la performance totale
+en pourcentage. Ghostfolio est relu quand la dernière lecture date de plus d'une période de mise à jour.
+
+## Exemples de scènes
+
+- **Bilan du soir** : chaque jour à 18 h, « Ghostfolio : lire le portefeuille », puis envoyer la phrase par
+  Telegram.
+- **Gros mouvement** : déclencheur « Changement d'état de l'appareil » sur la fonctionnalité **Variation du
+  jour (%)** du portefeuille, au-dessus de 3 (et une deuxième scène en dessous de -3), avec « Exécuter
+  seulement lorsque le seuil est passé » : une notification quand les marchés bougent.
+- **Fêter ça** : « Ghostfolio : plus haut historique » sur la performance totale, puis une lumière en vert et
+  la phrase lue à voix haute.
+
+## Confidentialité et données
+
+- L'intégration lit `api/v1/user`, `api/v2/portfolio/performance` (périodes 1d, ytd et max),
+  `api/v1/portfolio/details` et `api/v1/account`. Elle ne fait que se connecter avec le jeton de sécurité
+  (`api/v1/auth/anonymous`) et n'écrit jamais dans Ghostfolio.
+- Les journaux ne contiennent jamais de montant, de nom de compte, le jeton ni l'adresse du serveur, même au
+  niveau debug.
+- Sous `/data`, l'intégration garde l'identifiant de l'utilisateur Ghostfolio, les deux plus hauts et le jour du
+  dernier événement, pour qu'un redémarrage ne déclenche rien deux fois.
+- Vos valeurs restent entre Gladys et votre Ghostfolio : aucun service tiers.
 
 ## Dépannage
 
-L'intégration journalise tout ce qu'elle fait : consultez les logs de
-l'intégration depuis l'interface Gladys (ou `docker logs` sur l'hôte) avec
-`LOG_LEVEL=debug` pour le détail complet.
+- **« Ghostfolio refuse le jeton de sécurité »** : le jeton a été renouvelé, ou mal recopié. Générez-en un
+  nouveau dans Mon Ghostfolio → Paramètres et collez-le à nouveau.
+- **« Ghostfolio ne répond pas »** : vérifiez l'adresse depuis la machine de Gladys
+  (`curl http://…/api/v1/health` doit répondre `{"status":"OK"}`). Les dernières valeurs sont gardées.
+- **« Cette adresse ne répond pas comme l'API de Ghostfolio »** : l'adresse mène ailleurs (une page de proxy,
+  un autre port).
+- **Les chiffres ne bougent pas** : Ghostfolio met ses cours à jour lui-même ; vérifiez sa propre page. La
+  variation du jour reste à 0 marchés fermés.
+- Plus de détails : réglez `LOG_LEVEL=debug` sur l'intégration et lisez ses journaux.
+
+## Limites
+
+- Lecture seule ; un seul utilisateur Ghostfolio (celui du jeton). Le cloud de Ghostfolio (ghostfol.io) devrait
+  fonctionner avec son adresse, mais n'a pas été testé.
+- Les chiffres suivent la mise à jour des cours et le cache de Ghostfolio : parfois quelques minutes de retard.
+- Le graphique de Ghostfolio est échantillonné sur les longues périodes : un plus haut entre deux points peut
+  échapper à la toute première lecture.
+- Développée et testée contre un vrai Ghostfolio 3.88.0 en Docker, avec des comptes et des actifs fictifs, pas
+  encore sur une installation Gladys avec un vrai portefeuille : vos retours sont les bienvenus.
+- Non affiliée à Ghostfolio.

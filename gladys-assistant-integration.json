@@ -1,177 +1,449 @@
 {
   "manifest_version": 1,
   "type": "device",
-  "name": "Demo Devices Template",
+  "name": "Ghostfolio",
   "description": {
-    "en": "Starter template showing sensors, a switch, a dimmable light and a smart plug.",
-    "fr": "Template de démarrage : capteurs, interrupteur, lampe variable et prise connectée."
+    "en": "Net worth, performance and accounts of your Ghostfolio portfolio in Gladys.",
+    "fr": "Patrimoine, performances et comptes de votre portefeuille Ghostfolio dans Gladys.",
+    "de": "Vermögen, Performance und Konten deines Ghostfolio-Portfolios in Gladys.",
+    "es": "Patrimonio, rentabilidad y cuentas de su cartera Ghostfolio en Gladys."
   },
   "version": "1.0.0",
-  "docker_image": "ghcr.io/gladysassistant/integration-template-js:1.0.0",
+  "docker_image": "ghcr.io/guim31/gladys-ghostfolio:1.0.0",
   "gladys_version": ">=5.1.0",
-  "cover_image": "https://raw.githubusercontent.com/GladysAssistant/integration-template-js/master/cover.png",
-  "categories": ["lighting", "security", "environment"],
-  "transports": ["local", "cloud"],
+  "cover_image": "https://raw.githubusercontent.com/guim31/gladys-ghostfolio/main/cover.png",
+  "categories": ["services"],
+  "transports": ["local"],
   "config_schema": [
     {
       "key": "intro",
       "type": "section",
-      "label": { "en": "Getting started", "fr": "Pour commencer" },
+      "label": {
+        "en": "Connection to Ghostfolio",
+        "fr": "Connexion à Ghostfolio",
+        "de": "Verbindung zu Ghostfolio",
+        "es": "Conexión con Ghostfolio"
+      },
       "description": {
-        "en": "The demo weather station reads real data from the free Open-Meteo API: pick the coordinates to observe. No account, no API key.",
-        "fr": "La station météo de démonstration lit de vraies données via l'API gratuite Open-Meteo : choisissez les coordonnées à observer. Pas de compte, pas de clé d'API."
+        "en": "Paste below the address of your Ghostfolio and the security token of your user (the one you sign in with; My Ghostfolio → Settings can generate a new one). Then add the portfolio and the accounts you want in the Discover tab.",
+        "fr": "Collez ci-dessous l'adresse de votre Ghostfolio et le jeton de sécurité de votre utilisateur (celui qui sert à vous connecter ; Mon Ghostfolio → Paramètres peut en générer un nouveau). Ajoutez ensuite le portefeuille et les comptes voulus dans l'onglet Découverte.",
+        "de": "Füge unten die Adresse deines Ghostfolio und das Sicherheits-Token deines Benutzers ein (das, mit dem du dich anmeldest; Mein Ghostfolio → Einstellungen kann ein neues erzeugen). Füge dann das Portfolio und die gewünschten Konten im Tab „Entdecken“ hinzu.",
+        "es": "Pegue abajo la dirección de su Ghostfolio y el token de seguridad de su usuario (el que usa para iniciar sesión; Mi Ghostfolio → Ajustes puede generar uno nuevo). Después añada la cartera y las cuentas que desee en la pestaña Descubrir."
       },
       "links": [
         {
-          "url": "https://open-meteo.com/en/docs",
-          "label": { "en": "Open-Meteo documentation", "fr": "Documentation Open-Meteo" }
+          "url": "https://github.com/guim31/gladys-ghostfolio/blob/main/docs/en.md",
+          "label": {
+            "en": "Setup guide",
+            "fr": "Guide d'installation",
+            "de": "Installationsanleitung",
+            "es": "Guía de instalación"
+          }
+        },
+        {
+          "url": "https://ghostfol.io",
+          "label": {
+            "en": "Ghostfolio website",
+            "fr": "Site de Ghostfolio",
+            "de": "Website von Ghostfolio",
+            "es": "Sitio web de Ghostfolio"
+          }
         }
       ]
     },
     {
-      "key": "latitude",
-      "type": "number",
-      "label": { "en": "Latitude", "fr": "Latitude" },
-      "description": {
-        "en": "Latitude used for the demo weather sensor.",
-        "fr": "Latitude utilisée par le capteur météo de démonstration."
+      "key": "url",
+      "type": "string",
+      "label": {
+        "en": "Address of Ghostfolio",
+        "fr": "Adresse de Ghostfolio",
+        "de": "Adresse von Ghostfolio",
+        "es": "Dirección de Ghostfolio"
       },
-      "placeholder": { "en": "e.g. 48.8566", "fr": "ex. 48.8566" },
+      "description": {
+        "en": "The address you open Ghostfolio with, reachable from Gladys.",
+        "fr": "L'adresse à laquelle vous ouvrez Ghostfolio, joignable depuis Gladys.",
+        "de": "Die Adresse, unter der du Ghostfolio öffnest, von Gladys aus erreichbar.",
+        "es": "La dirección con la que abre Ghostfolio, accesible desde Gladys."
+      },
+      "placeholder": {
+        "en": "e.g. http://192.168.1.20:3333",
+        "fr": "ex. http://192.168.1.20:3333",
+        "de": "z. B. http://192.168.1.20:3333",
+        "es": "p. ej. http://192.168.1.20:3333"
+      },
       "required": true,
-      "default": 48.8566,
-      "min": -90,
-      "max": 90
+      "default": ""
     },
     {
-      "key": "longitude",
-      "type": "number",
-      "label": { "en": "Longitude", "fr": "Longitude" },
-      "description": {
-        "en": "Longitude used for the demo weather sensor.",
-        "fr": "Longitude utilisée par le capteur météo de démonstration."
+      "key": "token",
+      "type": "secret",
+      "label": {
+        "en": "Security token",
+        "fr": "Jeton de sécurité",
+        "de": "Sicherheits-Token",
+        "es": "Token de seguridad"
       },
-      "placeholder": { "en": "e.g. 2.3522", "fr": "ex. 2.3522" },
-      "required": true,
-      "default": 2.3522,
-      "min": -180,
-      "max": 180
+      "description": {
+        "en": "Only used to read: the integration never writes to Ghostfolio. Stored by Gladys, never written to the logs.",
+        "fr": "Sert seulement à lire : l'intégration n'écrit jamais dans Ghostfolio. Gardé par Gladys, jamais écrit dans les journaux.",
+        "de": "Dient nur zum Lesen: die Integration schreibt nie in Ghostfolio. Von Gladys gespeichert, nie in die Protokolle geschrieben.",
+        "es": "Solo sirve para leer: la integración nunca escribe en Ghostfolio. Guardado por Gladys, nunca escrito en los registros."
+      },
+      "required": true
     },
     {
-      "key": "unit",
-      "type": "select",
-      "label": { "en": "Temperature unit", "fr": "Unité de température" },
+      "key": "allow_self_signed",
+      "type": "boolean",
+      "label": {
+        "en": "Accept a self-signed certificate",
+        "fr": "Accepter un certificat auto-signé",
+        "de": "Selbstsigniertes Zertifikat akzeptieren",
+        "es": "Aceptar un certificado autofirmado"
+      },
+      "description": {
+        "en": "Only for an https address whose certificate you made yourself.",
+        "fr": "Seulement pour une adresse https dont vous avez fait le certificat vous-même.",
+        "de": "Nur für eine https-Adresse, deren Zertifikat du selbst erstellt hast.",
+        "es": "Solo para una dirección https cuyo certificado haya creado usted mismo."
+      },
       "required": false,
-      "default": "celsius",
+      "default": false
+    },
+    {
+      "key": "refresh_interval",
+      "type": "select",
+      "label": {
+        "en": "Refresh interval",
+        "fr": "Fréquence de mise à jour",
+        "de": "Aktualisierungsintervall",
+        "es": "Intervalo de actualización"
+      },
+      "description": {
+        "en": "How often Ghostfolio is read. It updates its quotes itself: 15 minutes is plenty.",
+        "fr": "Fréquence de lecture de Ghostfolio. Il met ses cours à jour lui-même : 15 minutes suffisent.",
+        "de": "Wie oft Ghostfolio gelesen wird. Es aktualisiert seine Kurse selbst: 15 Minuten reichen.",
+        "es": "Frecuencia de lectura de Ghostfolio. Actualiza sus cotizaciones por sí mismo: 15 minutos bastan."
+      },
+      "required": false,
+      "default": "15",
       "options": [
-        { "value": "celsius", "label": { "en": "Celsius", "fr": "Celsius" } },
-        { "value": "fahrenheit", "label": { "en": "Fahrenheit", "fr": "Fahrenheit" } }
+        {
+          "value": "5",
+          "label": {
+            "en": "5 minutes",
+            "fr": "5 minutes",
+            "de": "5 Minuten",
+            "es": "5 minutos"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "en": "10 minutes",
+            "fr": "10 minutes",
+            "de": "10 Minuten",
+            "es": "10 minutos"
+          }
+        },
+        {
+          "value": "15",
+          "label": {
+            "en": "15 minutes",
+            "fr": "15 minutes",
+            "de": "15 Minuten",
+            "es": "15 minutos"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "en": "30 minutes",
+            "fr": "30 minutes",
+            "de": "30 Minuten",
+            "es": "30 minutos"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "en": "60 minutes",
+            "fr": "60 minutes",
+            "de": "60 Minuten",
+            "es": "60 minutos"
+          }
+        }
       ]
     },
     {
-      "key": "poll_frequency",
-      "type": "number",
-      "label": { "en": "Refresh interval (s)", "fr": "Intervalle de rafraîchissement (s)" },
+      "key": "language",
+      "type": "select",
+      "label": {
+        "en": "Language of the texts",
+        "fr": "Langue des textes",
+        "de": "Sprache der Texte",
+        "es": "Idioma de los textos"
+      },
       "description": {
-        "en": "How often sensors are polled, in seconds (one minute minimum).",
-        "fr": "Fréquence d'interrogation des capteurs, en secondes (une minute minimum)."
+        "en": "Names of the features (at their creation) and texts sent to the scenes.",
+        "fr": "Noms des fonctionnalités (à leur création) et textes envoyés aux scènes.",
+        "de": "Namen der Funktionen (bei ihrer Erstellung) und an Szenen gesendete Texte.",
+        "es": "Nombres de las funciones (al crearlas) y textos enviados a las escenas."
       },
       "required": false,
-      "default": 300,
-      "min": 60,
-      "max": 3600
+      "default": "fr",
+      "options": [
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "Anglais",
+            "de": "Englisch",
+            "es": "Inglés"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "French",
+            "fr": "Français",
+            "de": "Französisch",
+            "es": "Francés"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "German",
+            "fr": "Allemand",
+            "de": "Deutsch",
+            "es": "Alemán"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Spanish",
+            "fr": "Espagnol",
+            "de": "Spanisch",
+            "es": "Español"
+          }
+        }
+      ]
     }
   ],
   "actions": [
     {
-      "key": "test_weather",
-      "label": { "en": "Test the weather provider", "fr": "Tester le fournisseur météo" },
-      "timeout_seconds": 30
-    },
-    {
-      "key": "identify",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
-      "fields": [
-        {
-          "key": "device",
-          "type": "select",
-          "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
-          "required": true
-        }
-      ]
+      "key": "check_now",
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
+      },
+      "timeout_seconds": 120
     }
   ],
   "scene_triggers": [
     {
-      "key": "motion_detected",
-      "label": { "en": "Motion detected", "fr": "Mouvement détecté" },
+      "key": "all_time_high",
+      "label": {
+        "en": "Ghostfolio: all-time high",
+        "fr": "Ghostfolio : plus haut historique",
+        "de": "Ghostfolio: Allzeithoch",
+        "es": "Ghostfolio: máximo histórico"
+      },
       "description": {
-        "en": "A demo motion sensor saw a person or an animal move.",
-        "fr": "Un détecteur de démonstration a vu bouger une personne ou un animal."
+        "en": "The net worth, or the total performance in percent, beats its highest value. At most once a day per measure.",
+        "fr": "Le patrimoine, ou la performance totale en pourcentage, dépasse son plus haut. Au plus une fois par jour et par mesure.",
+        "de": "Das Vermögen oder die Gesamtperformance in Prozent übertrifft ihren Höchstwert. Höchstens einmal pro Tag und Messgröße.",
+        "es": "El patrimonio, o la rentabilidad total en porcentaje, supera su máximo. Como mucho una vez al día por medida."
       },
       "fields": [
         {
           "key": "device",
           "type": "select",
           "source": "devices",
-          "label": { "en": "Sensor", "fr": "Détecteur" }
+          "label": {
+            "en": "Portfolio",
+            "fr": "Portefeuille",
+            "de": "Portfolio",
+            "es": "Cartera"
+          }
         },
         {
-          "key": "target",
-          "type": "multi_select",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" },
+          "key": "measure",
+          "type": "select",
+          "required": true,
+          "default": "net_worth",
+          "label": {
+            "en": "Measure",
+            "fr": "Mesure",
+            "de": "Messgröße",
+            "es": "Medida"
+          },
           "options": [
-            { "value": "person", "label": { "en": "Person", "fr": "Personne" } },
-            { "value": "animal", "label": { "en": "Animal", "fr": "Animal" } }
+            {
+              "value": "net_worth",
+              "label": {
+                "en": "Net worth",
+                "fr": "Patrimoine total",
+                "de": "Gesamtvermögen",
+                "es": "Patrimonio total"
+              }
+            },
+            {
+              "value": "performance",
+              "label": {
+                "en": "Total performance (%)",
+                "fr": "Performance totale (%)",
+                "de": "Gesamtperformance (%)",
+                "es": "Rentabilidad total (%)"
+              }
+            }
           ]
         }
       ],
       "variables": [
         {
-          "key": "target",
+          "key": "value",
+          "type": "number",
+          "label": {
+            "en": "New high",
+            "fr": "Nouveau plus haut",
+            "de": "Neues Hoch",
+            "es": "Nuevo máximo"
+          }
+        },
+        {
+          "key": "previous",
+          "type": "number",
+          "label": {
+            "en": "Previous high",
+            "fr": "Plus haut précédent",
+            "de": "Bisheriges Hoch",
+            "es": "Máximo anterior"
+          }
+        },
+        {
+          "key": "currency",
           "type": "string",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" }
+          "label": {
+            "en": "Unit (EUR, USD… or %)",
+            "fr": "Unité (EUR, USD… ou %)",
+            "de": "Einheit (EUR, USD… oder %)",
+            "es": "Unidad (EUR, USD… o %)"
+          }
+        },
+        {
+          "key": "text",
+          "type": "string",
+          "label": {
+            "en": "Sentence to send or read",
+            "fr": "Phrase à envoyer ou lire",
+            "de": "Satz zum Senden oder Vorlesen",
+            "es": "Frase para enviar o leer"
+          }
         }
       ]
     }
   ],
   "scene_actions": [
     {
-      "key": "identify_device",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
-      "description": {
-        "en": "Make a device signal itself (the demo light blinks).",
-        "fr": "Fait se signaler un appareil (la lampe de démonstration clignote)."
+      "key": "read_portfolio",
+      "label": {
+        "en": "Ghostfolio: read the portfolio",
+        "fr": "Ghostfolio : lire le portefeuille",
+        "de": "Ghostfolio: Portfolio vorlesen",
+        "es": "Ghostfolio: leer la cartera"
       },
-      "timeout_seconds": 15,
-      "fields": [
-        {
-          "key": "device",
-          "type": "select",
-          "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
-          "required": true
-        }
-      ],
+      "description": {
+        "en": "The net worth and the changes of today, this year and since the start, as a sentence to send or read aloud.",
+        "fr": "Le patrimoine et les variations du jour, de l'année et depuis le début, en une phrase à envoyer ou lire.",
+        "de": "Das Vermögen und die Änderungen von heute, dieses Jahres und seit Beginn, als Satz zum Senden oder Vorlesen.",
+        "es": "El patrimonio y las variaciones del día, del año y desde el inicio, en una frase para enviar o leer."
+      },
+      "timeout_seconds": 120,
       "outputs": [
         {
-          "key": "signalled",
-          "type": "boolean",
-          "label": { "en": "Device signalled", "fr": "Appareil signalé" }
+          "key": "text",
+          "type": "string",
+          "label": {
+            "en": "Sentence to send or read",
+            "fr": "Phrase à envoyer ou lire",
+            "de": "Satz zum Senden oder Vorlesen",
+            "es": "Frase para enviar o leer"
+          }
+        },
+        {
+          "key": "net_worth",
+          "type": "number",
+          "label": {
+            "en": "Net worth",
+            "fr": "Patrimoine total",
+            "de": "Gesamtvermögen",
+            "es": "Patrimonio total"
+          }
+        },
+        {
+          "key": "day_change",
+          "type": "number",
+          "label": {
+            "en": "Change today",
+            "fr": "Variation du jour",
+            "de": "Änderung heute",
+            "es": "Variación del día"
+          }
+        },
+        {
+          "key": "day_percent",
+          "type": "number",
+          "label": {
+            "en": "Change today (%)",
+            "fr": "Variation du jour (%)",
+            "de": "Änderung heute (%)",
+            "es": "Variación del día (%)"
+          }
+        },
+        {
+          "key": "ytd_percent",
+          "type": "number",
+          "label": {
+            "en": "Change this year (%)",
+            "fr": "Variation depuis le 1er janvier (%)",
+            "de": "Änderung seit 1. Januar (%)",
+            "es": "Variación desde el 1 de enero (%)"
+          }
+        },
+        {
+          "key": "total_percent",
+          "type": "number",
+          "label": {
+            "en": "Total performance (%)",
+            "fr": "Performance totale (%)",
+            "de": "Gesamtperformance (%)",
+            "es": "Rentabilidad total (%)"
+          }
         }
       ]
     }
   ],
   "widgets": [
     {
-      "key": "demo_status",
-      "label": { "en": "Demo status", "fr": "État de la démo" },
-      "description": {
-        "en": "Live temperature and plug power, plug connection and observed location.",
-        "fr": "Température et puissance en direct, connexion de la prise, position observée."
+      "key": "overview",
+      "label": {
+        "en": "Ghostfolio overview",
+        "fr": "Aperçu Ghostfolio",
+        "de": "Ghostfolio-Übersicht",
+        "es": "Resumen de Ghostfolio"
       },
-      "icon": "activity",
-      "action_timeout_seconds": 15
+      "description": {
+        "en": "Net worth, performance, allocation and accounts of your Ghostfolio portfolio.",
+        "fr": "Patrimoine, performances, répartition et comptes de votre portefeuille Ghostfolio.",
+        "de": "Vermögen, Performance, Aufteilung und Konten deines Ghostfolio-Portfolios.",
+        "es": "Patrimonio, rentabilidad, distribución y cuentas de su cartera Ghostfolio."
+      },
+      "icon": "trending-up"
     }
   ]
 }
