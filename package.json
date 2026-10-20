@@ -1,8 +1,8 @@
 {
-  "name": "gladys-integration-template-js",
+  "name": "gladys-ghostfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Official starter template to build an external integration for Gladys Assistant with the JavaScript SDK.",
+  "description": "Gladys Assistant integration for Ghostfolio: net worth, performance and accounts of your portfolio.",
   "type": "module",
   "main": "index.js",
   "scripts": {

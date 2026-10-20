@@ -30,6 +30,15 @@ Gladys before reporting a problem.
 
 In scope: the code of this repository and the Docker image it publishes.
 
+The integration holds the security token of a Ghostfolio user, which gives access to the whole
+account of that user. Gladys stores it with the configuration and passes it to the container; the
+integration only sends it to the address of Ghostfolio given in the configuration, to get a session
+token kept in memory, never writes either to `/data` or to the logs, and otherwise only makes GET
+requests. Under `/data`, it keeps the id of the Ghostfolio user, the highest net worth and total
+performance reached, and the day of the last scene event (no account, name or token). It talks to
+Ghostfolio only, on the network of the user; certificate checks are skipped only when "Accept a
+self-signed certificate" is enabled.
+
 Out of scope: Gladys Assistant itself (see its
 [security policy](https://github.com/GladysAssistant/Gladys/security/policy)),
 and the third-party services and devices the integration talks to.

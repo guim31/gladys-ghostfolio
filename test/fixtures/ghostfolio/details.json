@@ -1,0 +1,236 @@
+{
+  "accounts": {
+    "95ad0bfa-dc02-447f-9c50-8910f20df3c6": {
+      "balance": 1200,
+      "currency": "EUR",
+      "name": "Compte titres",
+      "valueInBaseCurrency": 3300
+    },
+    "772d76d4-55e8-4d89-8a73-6073002f51fc": {
+      "balance": 0,
+      "currency": "USD",
+      "name": "My Account",
+      "valueInBaseCurrency": 0
+    },
+    "17c142d9-767f-42af-8e3c-e93095fb9006": {
+      "balance": 350.5,
+      "currency": "EUR",
+      "name": "PEA",
+      "valueInBaseCurrency": 1350.5
+    },
+    "d6fdd6fb-8f61-4c27-82f4-11de4b80feee": {
+      "balance": 500,
+      "currency": "USD",
+      "name": "US Broker",
+      "valueInBaseCurrency": 979.33
+    }
+  },
+  "createdAt": "2026-10-20T06:58:33.803Z",
+  "hasError": true,
+  "holdings": [
+    {
+      "activitiesCount": 1,
+      "marketPrice": 50,
+      "tags": [],
+      "allocationInPercentage": 0.17762525689052777,
+      "assetProfile": {
+        "assetClass": "FIXED_INCOME",
+        "assetSubClass": "BOND",
+        "countries": [],
+        "currency": "EUR",
+        "dataSource": "MANUAL",
+        "holdings": [],
+        "isin": null,
+        "name": "Gladys Bond Fund",
+        "sectors": [],
+        "symbol": "21fa4236-0981-4f1f-a078-29360bdf8a78",
+        "url": null
+      },
+      "dateOfFirstActivity": "2025-01-10T00:00:00.000Z",
+      "dividend": 0,
+      "grossPerformance": 0,
+      "grossPerformancePercent": 0,
+      "grossPerformancePercentWithCurrencyEffect": 0,
+      "grossPerformanceWithCurrencyEffect": 0,
+      "investment": 1000,
+      "netPerformance": 0,
+      "netPerformancePercent": 0,
+      "netPerformancePercentWithCurrencyEffect": 0,
+      "netPerformanceWithCurrencyEffect": 0,
+      "quantity": 20,
+      "valueInBaseCurrency": 1000
+    },
+    {
+      "activitiesCount": 3,
+      "marketPrice": 140,
+      "tags": [],
+      "allocationInPercentage": 0.37301303947010833,
+      "assetProfile": {
+        "assetClass": "EQUITY",
+        "assetSubClass": "ETF",
+        "countries": [],
+        "currency": "EUR",
+        "dataSource": "MANUAL",
+        "holdings": [],
+        "isin": null,
+        "name": "Gladys World ETF",
+        "sectors": [],
+        "symbol": "5c2a52a2-b644-4050-bc9d-418d2a6d6657",
+        "url": null
+      },
+      "dateOfFirstActivity": "2024-03-15T00:00:00.000Z",
+      "dividend": 15,
+      "grossPerformance": 515,
+      "grossPerformancePercent": 0.39053891736066626,
+      "grossPerformancePercentWithCurrencyEffect": 0.39053891736066626,
+      "grossPerformanceWithCurrencyEffect": 515,
+      "investment": 1600,
+      "netPerformance": 511,
+      "netPerformancePercent": 0.3875056053811659,
+      "netPerformancePercentWithCurrencyEffect": 0.38724473516273133,
+      "netPerformanceWithCurrencyEffect": 511,
+      "quantity": 15,
+      "valueInBaseCurrency": 2100
+    },
+    {
+      "activitiesCount": 1,
+      "marketPrice": 200,
+      "tags": [],
+      "allocationInPercentage": 0.09488385972578213,
+      "assetProfile": {
+        "assetClass": "EQUITY",
+        "assetSubClass": "STOCK",
+        "countries": [],
+        "currency": "USD",
+        "dataSource": "MANUAL",
+        "holdings": [],
+        "isin": null,
+        "name": "Gladys Tech Inc",
+        "sectors": [],
+        "symbol": "d48fec2e-4bc0-48df-b417-1bd80b960f46",
+        "url": null
+      },
+      "dateOfFirstActivity": "2025-09-01T00:00:00.000Z",
+      "dividend": 0,
+      "grossPerformance": 0,
+      "grossPerformancePercent": 0,
+      "grossPerformancePercentWithCurrencyEffect": 0.04306769051031689,
+      "grossPerformanceWithCurrencyEffect": 22.05599802017214,
+      "investment": 534.18,
+      "netPerformance": -0.8903,
+      "netPerformancePercent": -0.0016666666666666668,
+      "netPerformancePercentWithCurrencyEffect": 0.04140102384365022,
+      "netPerformanceWithCurrencyEffect": 21.202458016872427,
+      "quantity": 3,
+      "valueInBaseCurrency": 534.18
+    },
+    {
+      "activitiesCount": 2,
+      "marketPrice": 1,
+      "tags": [],
+      "allocationInPercentage": 0.27540796080876334,
+      "assetProfile": {
+        "assetClass": "LIQUIDITY",
+        "assetSubClass": "CASH",
+        "countries": [],
+        "currency": "EUR",
+        "dataSource": "YAHOO",
+        "holdings": [],
+        "name": "EUR",
+        "sectors": [],
+        "symbol": "EUR"
+      },
+      "dateOfFirstActivity": "2026-10-20T00:00:00.000Z",
+      "dividend": 0,
+      "grossPerformance": 0,
+      "grossPerformancePercent": 0,
+      "grossPerformancePercentWithCurrencyEffect": 0,
+      "grossPerformanceWithCurrencyEffect": 0,
+      "investment": 1550.5,
+      "netPerformance": 0,
+      "netPerformancePercent": 0,
+      "netPerformancePercentWithCurrencyEffect": 0,
+      "netPerformanceWithCurrencyEffect": 0,
+      "quantity": 1550.5,
+      "valueInBaseCurrency": 1550.5
+    },
+    {
+      "activitiesCount": 1,
+      "marketPrice": 1,
+      "tags": [],
+      "allocationInPercentage": 0.07906988310481844,
+      "assetProfile": {
+        "assetClass": "LIQUIDITY",
+        "assetSubClass": "CASH",
+        "countries": [],
+        "currency": "USD",
+        "dataSource": "YAHOO",
+        "holdings": [],
+        "name": "USD",
+        "sectors": [],
+        "symbol": "USD"
+      },
+      "dateOfFirstActivity": "2026-10-20T00:00:00.000Z",
+      "dividend": 0,
+      "grossPerformance": 0,
+      "grossPerformancePercent": 0,
+      "grossPerformancePercentWithCurrencyEffect": 0,
+      "grossPerformanceWithCurrencyEffect": 0,
+      "investment": 445.15,
+      "netPerformance": 0,
+      "netPerformancePercent": 0,
+      "netPerformancePercentWithCurrencyEffect": 0,
+      "netPerformanceWithCurrencyEffect": 0,
+      "quantity": 500,
+      "valueInBaseCurrency": 445.15
+    }
+  ],
+  "platforms": {
+    "UNKNOWN": {
+      "balance": 1200,
+      "currency": "EUR",
+      "valueInBaseCurrency": 5629.83
+    }
+  },
+  "summary": {
+    "annualizedPerformancePercent": 0.0822252905592453,
+    "annualizedPerformancePercentWithCurrencyEffect": 0.085912204768536,
+    "cash": 1995.65,
+    "currentValueInBaseCurrency": 4079.33,
+    "dateOfFirstActivity": "2024-03-15T00:00:00.000Z",
+    "dividendInBaseCurrency": 15,
+    "dividendPercentageWithCurrencyEffect": 0.006735752289521538,
+    "excludedAccountsAndActivities": 0,
+    "netPerformance": 510.1097,
+    "netPerformancePercentage": 0.22807803777972052,
+    "netPerformancePercentageWithCurrencyEffect": 0.23898559500507593,
+    "netPerformanceWithCurrencyEffect": 532.2024580168725,
+    "totalBuy": 3134.18,
+    "totalSell": 0,
+    "activityCount": 4,
+    "dividendYieldPercent": 0.0017468589441167,
+    "dividendYieldPercentWithCurrencyEffect": 0.0017586034622836,
+    "emergencyFund": {
+      "assets": 0,
+      "cash": 0,
+      "total": 0
+    },
+    "fees": 4.853540003299713,
+    "filteredValueInBaseCurrency": 5629.83,
+    "filteredValueInPercentage": 1,
+    "fireWealth": {
+      "today": {
+        "valueInBaseCurrency": 5629.83
+      }
+    },
+    "grossPerformance": 514.9632400032997,
+    "grossPerformanceWithCurrencyEffect": 537.0559980201722,
+    "interestInBaseCurrency": 0,
+    "liabilitiesInBaseCurrency": 0,
+    "totalAssetsInBaseCurrency": 5629.83,
+    "totalCashInBaseCurrency": 1995.65,
+    "totalInvestment": 3579.33,
+    "totalInvestmentValueWithCurrencyEffect": 3557.274001979828,
+    "totalValueInBaseCurrency": 5629.83
+  }
+}

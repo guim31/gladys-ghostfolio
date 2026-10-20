@@ -16,8 +16,8 @@ its only runtime dependency. It started from the official JavaScript template.
 ```bash
 npm install
 npm test                                  # node --test, the built-in runner
-node --test test/devices.test.js          # one file
-node --test --test-name-pattern "plug"    # tests whose name matches
+node --test test/monitor.test.js          # one file
+node --test --test-name-pattern "high"    # tests whose name matches
 npm run lint                              # ESLint
 npm run format:check                      # Prettier, as the CI runs it
 npm run format                            # Prettier, fix in place
@@ -32,15 +32,20 @@ pushing.
 
 ```
 index.js                          SDK wiring only: handlers registered before connect()
-src/devices/index.js              registry of the device blueprints + dispatch helpers
-src/devices/<type>.js             one device type per file (buildDevice, onPoll, onSetValue...)
-src/scenes.js                     scene action handlers (manifest `scene_actions`)
-src/widgets.js                    dashboard widget handlers (manifest `widgets`)
+src/app.js                        registers every SDK handler on a GladysIntegration (or the fake)
+src/monitor.js                    refresh cycle: Ghostfolio → devices, states, all-time high trigger
+src/ghostfolio.js                 Ghostfolio API client (token → session token, GET) and parsing
+src/http.js                       the one network call (node:http/https, self-signed on demand)
+src/devices.js                    the portfolio device and one device per account
+src/actions.js                    scene action read_portfolio; config action check_now
+src/widgets.js                    dashboard widget `overview` (status + card-list)
+src/texts.js                      texts of the container in en/fr/de/es, number formats
 src/config.js                     DEFAULT_CONFIG (mirrors the manifest defaults) + normalization
-src/weather.js                    example driver (Open-Meteo)
+src/store.js                      /data/ghostfolio.json: highs of the trigger (atomic)
 gladys-assistant-integration.json manifest: name, config_schema, actions, image...
-docs/en.md, docs/fr.md            user documentation, re-hosted by Gladys (mandatory)
-test/                             node --test, against the SDK's fake Gladys (integration-sdk/testing)
+docs/{en,fr,de,es}.md             user documentation, re-hosted by Gladys (en and fr mandatory)
+test/                             node --test, against the SDK's fake Gladys and a fake Ghostfolio
+test/fixtures/ghostfolio/         real answers of Ghostfolio 3.88.0, fictitious data
 .github/scripts/release.mjs       release helpers (manifest bump, changelog), tested in test/
 ```
 
@@ -70,8 +75,9 @@ test/                             node --test, against the SDK's fake Gladys (in
   `type: "provider"`: 5.1.0). `test/manifest.test.js` ties the manifest to the
   code (defaults, action, scene and widget handlers): change both sides
   together.
-- **User-facing text** is bilingual (English and French): action messages,
-  manifest texts, and `docs/en.md` / `docs/fr.md`, kept in sync.
+- **User-facing text** exists in English, French, German and Spanish: action
+  messages, manifest texts, feature names, widget texts and
+  `docs/{en,fr,de,es}.md`, kept in sync (`test/i18n.test.js`).
 - **Style.** Prettier formats, ESLint catches mistakes. Comments explain why,
   in English. Tests never touch the network.
 
@@ -233,3 +239,36 @@ long, et sur un « Sie »/« Ihr… » de politesse en allemand. Le store exige 
 - Docs `en`, `fr`, `de`, `es` avec les mêmes sections.
 - Chauffe, ouverture, sécurité : ne rien rendre pilotable « comme un thermostat » ou par un assistant
   vocal quand une erreur serait dangereuse (leçon d'OctoPrint).
+
+## Ghostfolio (cette intégration)
+
+- **API** : `POST /api/v1/auth/anonymous` `{ accessToken }` échange le jeton de sécurité de l'utilisateur contre
+  un JWT (`authToken`, 201) ; mauvais jeton : **403** (pas 401). Le JWT est gardé en mémoire et redemandé une
+  fois sur 401/403. Lectures : `v1/user` (`settings.baseCurrency`, `id`), `v2/portfolio/performance?range=1d|ytd|max`,
+  `v1/portfolio/details`, `v1/account`. Réponses enregistrées sur Ghostfolio 3.88.0 (`test/fixtures/ghostfolio`,
+  graphiques allégés).
+- **Champs** : `performance.currentValueInBaseCurrency` = positions seules, `currentNetWorth` = positions +
+  liquidités des comptes. On publie les variantes `…WithCurrencyEffect` (celles de l'interface). Les
+  pourcentages sont des **ratios** (0,239 = 23,9 %). En 3.x, `details.holdings` est un **tableau** dont la classe
+  est sous `assetProfile.assetClass` (un objet indexé par symbole en 2.x, classe à plat) ; les liquidités y
+  figurent en `LIQUIDITY`. `SymbolProfile` est devenu `assetProfile` dans les activités.
+- **Graphique `max`** : échantillonné (366 points pour deux ans et demi), et la trésorerie des comptes
+  (`totalCashInBaseCurrency`) n'y apparaît que le jour même : le `netWorth` du jour bondit au-dessus de
+  l'historique. D'où la règle du déclencheur : la première lecture est le point de départ (max du graphique et
+  de la valeur du jour), jamais un événement.
+- **Cache de Ghostfolio** : l'instantané du portefeuille est mis en cache dans Redis ; des cours ajoutés par
+  l'admin n'y entrent qu'après expiration (en test : `redis-cli FLUSHALL` sur le Redis de test).
+- **Instance de test** : `ghostfolio/ghostfolio` + `postgres:16-alpine` (`sslmode=disable` dans
+  `DATABASE_URL`, sinon la migration échoue en TLS) + `redis:7.4-alpine`. Premier utilisateur par
+  `POST /api/v1/user` (ADMIN, renvoie `accessToken`). Comptes par `POST /api/v1/account` (`isExcluded` refusé
+  en 3.88), opérations par `POST /api/v1/import` : un actif `MANUAL` doit avoir un symbole `GF_…` ; classe
+  d'actif par `PATCH /api/v1/admin/profile-data/MANUAL/<uuid>`, cours par
+  `POST /api/v1/market-data/MANUAL/<uuid>`.
+- **Choix** : seuls les appareils ajoutés dans Gladys sont suivis. La variation du jour au-delà de ±N % passe
+  par le déclencheur standard (doc, exemples) ; le seul déclencheur maison est le plus haut historique
+  (`measure` : `net_worth` ou `performance`), une fois par jour et par mesure au plus.
+- **Widget** : le cœur n'affiche **qu'une liste `status` par widget** (budget `status: 1` du SDK, un deuxième
+  `status` est jeté) : chiffres et répartition partagent la même liste (10 lignes au plus), les comptes
+  passent en `card-list`.
+- **Confidentialité** : aucun montant, nom de compte, jeton, JWT ni adresse dans les journaux, même en debug
+  (`test/logs.test.js`, qui retire l'horodatage avant de chercher des chiffres).
