@@ -1,6 +1,6 @@
 {
   "name": "gladys-ghostfolio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Gladys Assistant integration for Ghostfolio: net worth, performance and accounts of your portfolio.",
   "type": "module",
